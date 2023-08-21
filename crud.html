@@ -1,0 +1,462 @@
+index.html:
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Employee Crud Operations</title>
+</head>
+
+<body>
+	<h1>Crud Operations</h1>
+	<label>Employee Id <input type="number" id="id"></label><br><br>
+	<label>Employee Name <input type="text" id="name"></label><br><br>
+	<label>Job <input type="text" id="job"></label><br><br>
+	<label>Salary<input type="text" id="sal"></label><br><br>
+	<button id="first" onclick="first()">First</button>
+	<button id="Next" onclick="Next()">Next</button>
+	<button id="last" onclick="last()">Last</button>
+	<button id="prev" onclick="prev()">Prev</button>
+	<button id="Add" onclick="addEmployee()">Add</button>
+	<button id="del" onclick="del()">Delete</button>
+	<button id="edit" onclick="edit()">Edit</button>
+	<button id="clear" onclick="clearfield()">Clear</button>
+
+
+	<script>
+		var p = 0;
+		function first() {
+			var xhr = new XMLHttpRequest();
+			xhr.open('GET', 'Servlet?id=first', true);
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState === 4) {
+					var json = JSON.parse(xhr.responseText);
+					var id = document.getElementById('id');
+					var name = document.getElementById('name');
+					var job = document.getElementById('job');
+					var sal = document.getElementById('sal');
+					console.log(json);
+					id.value = json.id;
+					name.value = json.name;
+					job.value = json.job;
+					sal.value = json.sal;
+				}
+
+			}
+			xhr.send();
+			document.getElementById("id").readOnly=true;
+			document.getElementById("name").readOnly=true;
+			document.getElementById("job").readOnly=true;
+			document.getElementById("sal").readOnly=true;
+			
+		}
+
+		function last() {
+			var xhr = new XMLHttpRequest();
+			xhr.open('GET', 'Servlet?id=last', true);
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState === 4) {
+					var json = JSON.parse(xhr.responseText);
+					var id = document.getElementById('id');
+					var name = document.getElementById('name');
+					var job = document.getElementById('job');
+					var sal = document.getElementById('sal');
+					console.log(json);
+					id.value = json.id;
+					name.value = json.name;
+					job.value = json.job;
+					sal.value = json.sal;
+				}
+
+			}
+			xhr.send();
+			document.getElementById("id").readOnly=true;
+			document.getElementById("name").readOnly=true;
+			document.getElementById("job").readOnly=true;
+			document.getElementById("sal").readOnly=true;
+			
+		}
+
+		function Next() {
+
+
+			var xhr = new XMLHttpRequest();
+			p++;
+			xhr.open('GET', 'Servlet?id=Next&p=' + p, true);
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState === 4) {
+					var json = JSON.parse(xhr.responseText);
+					var id = document.getElementById('id');
+					var name = document.getElementById('name');
+					var job = document.getElementById('job');
+					var sal = document.getElementById('sal');
+					console.log(json);
+					id.value = json.id;
+					name.value = json.name;
+					job.value = json.job;
+					sal.value = json.sal;
+				}
+
+			}
+			xhr.send();
+			document.getElementById("id").readOnly=true;
+			document.getElementById("name").readOnly=true;
+			document.getElementById("job").readOnly=true;
+			document.getElementById("sal").readOnly=true;
+		}
+
+		function prev() {
+
+
+			var xhr = new XMLHttpRequest();
+			p--;
+			xhr.open('GET', 'Servlet?id=prev&p=' + p, true);
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState === 4) {
+					var json = JSON.parse(xhr.responseText);
+					var id = document.getElementById('id');
+					var name = document.getElementById('name');
+					var job = document.getElementById('job');
+					var sal = document.getElementById('sal');
+					console.log(json);
+					id.value = json.id;
+					name.value = json.name;
+					job.value = json.job;
+					sal.value = json.sal;
+				}
+
+			}
+			xhr.send();
+			document.getElementById("id").readOnly=true;
+			document.getElementById("name").readOnly=true;
+			document.getElementById("job").readOnly=true;
+			document.getElementById("sal").readOnly=true;
+		}
+
+		function del() {
+			var xhr = new XMLHttpRequest();
+			var empno = document.getElementById("id").value;
+			xhr.open('GET', 'Servlet?id=del&empno=' + empno + '&p=' + p, true);
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState === 4) {
+					
+					var data = JSON.parse(xhr.responseText);
+					document.getElementById('id').value = '';
+					document.getElementById('name').value = '';
+					document.getElementById('job').value = '';
+					document.getElementById('sal').value = '';
+					
+				}
+			};
+			xhr.send();
+			document.getElementById("id").readOnly=false;
+			document.getElementById("name").readOnly=false;
+			document.getElementById("job").readOnly=false;
+			document.getElementById("sal").readOnly=false;
+		}
+
+		function addEmployee() {
+			var xhr = new XMLHttpRequest();
+			var a = document.getElementById("id").value;
+			var b = document.getElementById("name").value;
+			var c = document.getElementById("job").value;
+			var d = document.getElementById("sal").value;
+			
+			xhr.open('GET', "Servlet?id=Add&a=" + a + "&b=" + b + "&c=" + c + "&d=" + d, true);
+			xhr.onreadystatechange = function () {
+				if (xhr.status === 200 && xhr.readyState === 4) {
+					document.getElementById('id').value = '';
+					document.getElementById('name').value = '';
+					document.getElementById('job').value = '';
+					document.getElementById('sal').value = '';
+					var data = JSON.parse(xhr.responseText);
+				}
+			};
+			xhr.send();
+			document.getElementById("id").readOnly=true;
+			document.getElementById("name").readOnly=true;
+			document.getElementById("job").readOnly=true;
+			document.getElementById("sal").readOnly=true;
+
+
+
+		}
+		function edit(){
+			var xhr = new XMLHttpRequest();
+			var a = document.getElementById("id").value;
+			var b = document.getElementById("name").value;
+			var c = document.getElementById("job").value;
+			var d = document.getElementById("sal").value;
+			
+			xhr.open('GET', "Servlet?id=edit&a=" + a + "&b=" + b + "&c=" + c + "&d=" + d, true);
+			
+			xhr.onreadystatechange = function () {
+				if (xhr.status === 200 && xhr.readyState === 4) {
+					var data = JSON.parse(xhr.responseText);
+				}
+			};
+			xhr.send();
+			document.getElementById("id").readOnly=false;
+			document.getElementById("name").readOnly=false;
+			document.getElementById("job").readOnly=false;
+			document.getElementById("sal").readOnly=false;
+
+			
+		}
+		function clearfield() {
+			document.getElementById('id').value = '';
+			document.getElementById('name').value = '';
+			document.getElementById('job').value = '';
+			document.getElementById('sal').value = '';
+			document.getElementById('id').readOnly = false;
+			document.getElementById('name').readOnly = false;
+			document.getElementById('job').readOnly = false;
+			document.getElementById('sal').readOnly = false;
+			document.getElementById('sal').value = " ";
+		}
+	</script>
+</body>
+</html>
+=========================================================================================================================
+
+Servlet.java
+package com.crud;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.json.JSONObject;
+
+/**
+ * Servlet implementation class Servlet
+ */
+@WebServlet("/Servlet")
+public class Servlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Default constructor.
+	 */
+	public Servlet() {
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		ConnectDB data = new ConnectDB();
+		int c = 1;
+		try {
+			JSONObject obj = new JSONObject();
+
+			ArrayList<Employee> emp = data.connection();
+			Employee e = null;
+			String btn = request.getParameter("id");
+			if (btn.equals("first")) {
+				e = emp.get(0);
+				obj.put("id", e.getEmpno());
+				obj.put("name", e.getEname());
+				obj.put("job", e.getJob());
+				obj.put("sal", e.getSal());
+				response.getWriter().write(obj.toString());
+			} else if (btn.equals("last")) {
+				e = emp.get(emp.size() - 1);
+				obj.put("id", e.getEmpno());
+				obj.put("name", e.getEname());
+				obj.put("job", e.getJob());
+				obj.put("sal", e.getSal());
+				response.getWriter().write(obj.toString());
+			}
+
+			else if (btn.equals("Next")) {
+				int p = Integer.parseInt(request.getParameter("p"));
+
+				e = emp.get(p);
+				obj.put("id", e.getEmpno());
+				obj.put("name", e.getEname());
+				obj.put("job", e.getJob());
+				obj.put("sal", e.getSal());
+				response.getWriter().write(obj.toString());
+				
+			}
+			else if (btn.equals("prev")) {
+				
+				int p = Integer.parseInt(request.getParameter("p"));
+				
+				e = emp.get(p);
+				obj.put("id", e.getEmpno());
+				obj.put("name", e.getEname());
+				obj.put("job", e.getJob());
+				obj.put("sal", e.getSal());
+				response.getWriter().write(obj.toString());
+				
+			}
+			else if(btn.equals("del")) {
+                int empno = Integer.parseInt(request.getParameter("empno"));
+                int g = 0;
+                for (int i = 0; i < emp.size(); i++) {
+                    if (emp.get(i).getEmpno()==(empno)) {
+                        g = i;
+                    }
+                }
+                emp.remove(g);
+                data.delete(empno);
+            }
+			else if (btn.equals("Add")) {
+				System.out.println(request.getParameter("a"));
+				int s1 = Integer.parseInt(request.getParameter("a"));
+				String s2 = request.getParameter("b");
+				String s3 = request.getParameter("c");
+				double s4 = Double.parseDouble(request.getParameter("d"));
+				Employee empo=new Employee(s1,s2,s3,s4);
+				data.Add(empo);
+				
+		
+		}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+======================================================================================================================================================
+
+JDBC connectivity
+
+package com.crud;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+public class ConnectDB {
+
+	public ArrayList<Employee> connection() throws SQLException, ClassNotFoundException {
+		Class.forName("org.postgresql.Driver");
+		String url = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=pavan123";
+		Connection conn = DriverManager.getConnection(url);
+		Statement st = conn.createStatement();
+		ArrayList<Employee> em = new ArrayList<Employee>();
+		ResultSet rs = st.executeQuery("select * from employee");
+		while (rs.next()) {
+			em.add(new Employee(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDouble(4)));
+		}
+
+		return em;
+	}
+
+
+public void delete(int s) throws Exception{
+	Class.forName("org.postgresql.Driver");
+	String url = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=pavan123";
+	Connection conn = DriverManager.getConnection(url);
+	PreparedStatement st = conn.prepareStatement("delete from employee where empno=?");
+	st.setInt(1, s);
+	st.executeUpdate();
+	connection();
+	}
+
+
+public void Add(Employee e) {
+	Connection conn = null;
+	PreparedStatement st = null;
+	try {
+		Class.forName("org.postgresql.Driver");
+		conn = DriverManager.getConnection(
+				"jdbc:postgresql://localhost:5432/postgres?user=postgres&password=pavan123");
+		st = conn.prepareStatement("insert into employee values(?,?,?,?)");
+		st.setInt(1, e.getEmpno());
+		st.setString(2,e.getEname() );
+		st.setString(3, e.getJob());
+		st.setDouble(4, e.getSal());
+		st.executeUpdate();
+		
+	}catch(Exception ee) {
+		ee.printStackTrace();
+	}
+	
+}
+
+
+
+}
+============================================================================================================================================
+Employee class with getters and setters
+
+package com.crud;
+
+public class Employee {
+	private int Empno;
+	private String ename;
+	private String job;
+	private double sal;
+
+
+	public Employee(int empno, String ename, String job, double sal) {
+		super();
+		Empno = empno;
+		this.ename = ename;
+		this.job = job;
+		this.sal = sal;
+	}
+
+
+	public int getEmpno() {
+		return Empno;
+	}
+
+
+	public void setEmpno(int empno) {
+		Empno = empno;
+	}
+
+
+	public String getEname() {
+		return ename;
+	}
+
+
+	public void setEname(String ename) {
+		this.ename = ename;
+	}
+
+
+	public String getJob() {
+		return job;
+	}
+
+
+	public void setJob(String job) {
+		this.job = job;
+	}
+
+
+	public double getSal() {
+		return sal;
+	}
+
+
+	public void setSal(double sal) {
+		this.sal = sal;
+	}
+
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Employee Empno" + Empno + ", Ename" + ename + ", Job" + job + ", Salary" + sal;
+	}
+
+}
